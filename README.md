@@ -9,7 +9,10 @@ A bot for Wikipedia races.
 This project consists of a Wikipedia crawler. It attempts to find a path between two different articles in Wikipedia, in which the article pages are the nodes and the links on a article's page is a directed edge towards the article it links to. It can apply either Depth First Search or Breadth First Search algorithms to it. There are also a couple of implementation optimization tools for it.
 
 -----
+
+
 ## Introduction
+
 #### What is the problem? 
 The goal here is to determine short paths from one article to the other. Given the size of Wikipedia, it is a similar process to finding a short path between two locations within a certain limited area with a large amount of different paths. The secondary goal is to do it in a time shorter than a human would be able to do it.
 
@@ -24,7 +27,9 @@ There is a running theory of the '6 degrees of Hitler' on Wikipedia that, simila
 Other than that, the user aaasen created 'Kapok: A Knowledge Graph of Wikipedia'. While very interesting and useful to iterate through Wikipedia, it was not applicable to the specific implementation suggested for this project.
 
 Robert West, a computer scientist at Stanford, has also done significant research on human behaviour vs automatic navigation. He helped develop Wikispeedia, which is a resource for which a user can try to get from one random page to another in the least amount of clicks.
+
 ----
+
 ## Materials and Methods
 The approach to this problem was to apply graph search on the pages.
 The code makes three approaches available:
@@ -41,7 +46,9 @@ Output: Miley_Cyrus -> Los_Angeles
 
 #### Breadth First Search With "Preparation"
 This is an approach with a similar algorithm to Breadth First Search, just adapted similarly to the approaches used in the '6 Degrees of Hitler' (see 'Introduction'). Before running the search, it prepares a list of pages that are known to link to the destination. While that process may consume a relevant amount of runtime, it makes the overall algorithm more efficient, as the search becomes aims at a set of pages instead of only one.
+
 ------
+
 ## Results & Discussion
 The main question in this project has been if an average computer, with no prior information on Wikipedia, could beat a human at finding a path from one page to another in the shortest amount of time.
 
@@ -53,14 +60,18 @@ In my personal computer, all 8GB of RAM were consumed within a few steps of the 
 However, the performance improves when the pages are not randomly selected. That is, humans have a higher likelihood of choosing well connected pages when deciding by themselves. With that, its not necessary to go into every page and would replicate more closely a human behaviour by not going too far into certain parts.
 
 Perhaps the biggest lesson to take away from this is the functionality of map services. While Wikipedia is big, so is the map between New York and Boston and a route from specific location in the two cities can be easily calculated within seconds by many engines. It shows the weakness of BFS and DFS in scalability for large settings.
+
 ------
+
 ## Future Work
 One of the main things that I tried to approach was to make sure I had the concurrency of program working correctly - hence that use of the Queue implementation. Initially, the goal was to develop this project with a typed language that could handle this better, as Go. Unfortunately for this implementation it doesn't make too much of a difference - the runtime in the abstract is the same, the change would be how the frameworks are implemented differently between the two languages.
 
 An improvement that could come out of its own project would be categorizing the pages in Wikipedia so that it is possible to rank the pages being linked and so that it is possible to choose pages that are more likely to link to the destination. Currently one of the main problems is going into pages that have a lot of links - just not useful ones. For example, the page of Franklin, Tennessee starting from Miley Cyrus. While it is one of the first pages in the article and one of the first to be explored, Franklin is not related to many big events or locations other than Miley herself.
 
 With enough preparation time, it should also be possible to record the Wikipedia pages' links to others beforehand in a database. Currently one of the main things that throws off runtime is how long it takes to request the HTML page, parse it and 'sanitize' it.
+
 -----
+
 ## Literature Cited and Referenced
 - Robert West, Joelle Pineau, and Doina Precup. Wikispeedia: An Online game for Inferring Semantic Distances between Concepts. In 21st International Joint Conference on Artificial Intelligence (IJCAI’09), pp. 1598-1603, Pasadena, Calif., 2009 
 
@@ -77,10 +88,14 @@ With enough preparation time, it should also be possible to record the Wikipedia
 - MediaWiki: http://www.mediawiki.org/wiki/API:Main_page
 
 - Wikispeedia: http://cs.mcgill.ca/~rwest/wikispeedia
+
 -----
+
 ## Acknowledgments
 Thanks to Luke for helping me figuring out regex and with Go when this was a Go project.
+
 ------
+
 ## Usage
 To run the program, simply clone the code and run from the command line:
 ```console
