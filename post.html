@@ -1,0 +1,54 @@
+<html>
+  <head>
+    Wikiracer: a bot for Wikipedia races
+  </head>
+<body>
+  <h1> The issues. </h1>
+  <p> I am writing this post based on the problems I faced while implementing the Wikipedia bot. The ideas behind the implementation are somewhat simple and the most interesting part about this is dealing with the problems that arise - proving the work not to be as simple as first thought. </p>
+
+  <hr>
+  <h3> The issue with APIs </h3>
+  <p> First off, I was glad to find out that there was a free non-profit API for Wikipedia: <a href='http://http://www.mediawiki.org/wiki/MediaWiki'> MediaWiki</a>. It is officially built by the foundation Wikipedia is in, Wikimedia, so I knew it was reliable. <br><br>
+
+  Unfortunately, it proved itself useless in this case since the most important resources I needed (categorization and embedded links) didn't seem to be in the API. Maybe it was and the documentation just didn't cover it.
+  <br><br>
+  Anyway, the approach I decided to take was to just extract the HTML of the page source by myself and then parse to find all the pages that could be linked to it. For that, I had to use regular expressions. While its generally not too hard to work with, it was tricky to figure out the correct regular expression.
+  </p>
+
+  <h3> The issue with the Main Page </h3>
+  <p> At this point in the project, I already had all the linked pages given a certain page. However, one thing to consider is that there is at least one page that is connectable: the main page of Wikipedia.
+<br><br>
+  Now, the game is a lot less fun if the goal is to find a page you can find from any page. The machine would probably beat the human every single time. Not probably, definitely.
+<br>
+  So part of parsing these links was to 'sanitize' them: ignore repetition, and ignore generals links like the Main Page.
+</p>
+<h3>
+The issue with cycles</h3>
+  <p>One of the main things in this project was to avoid moving in circles. I was already going through a lot of data and I needed to make sure I wasn't going through the same things multiple times.
+<br><br>
+  Now where is the issue? Well, while performing Breadth First Search I immediately decided to go with a Queue to my next steps. The issue here, however, is that a Queue (at least the implementation I used) was allowing for multiple instances of the same data to be put into it (which it should do!).
+<br><br>
+  Queues can't be iterated, so I couldn't do a simple <code> if link in queue </code> so I needed a separate way of telling me which pages had already been visited in order to avoid back-and-forth loops.
+<br><br>
+  I decided to use a SetQueue. Why? Well, firstly, Python already has its own implementation for Sets, which is a start. In addition, a set won't accumulate duplicates. Even better, it is also iterable. Win-win-win.
+</p>
+  <h3>The issue with disambiguation</h3>
+  <p>
+  While it sounds link a great connector between completely unrelated links (other than the name), the disambiguation pages soon became more of a hassle than of help. Yes, they do link pages like Miley Cyrus and the town Miley (which otherwise would be really hard to connect), but just as much as Miley the singer and Miley the town are unlikely connected, Miley the town and our destination page are also unlikely connected.
+<br><br>
+A similar situation is applicable to articles with parenthesis in them. In Wikipedia, an article with parenthesis in the title will often suggest disambiguation. In order to avoid dealing with too many of them, they have also been ignored.
+</p>
+
+<h3>The issue with being insistent</h3>
+<p>Apparently I ran my project too many times. Lesson learned: Wikipedia <i>will</i> kick out your access from their servers if you make too many requests too fast. Oops.
+<br><br>
+<p>On another note, there is a recursion depth limit in Python. So much for the functional programming background Northeastern provides.
+</p>
+<hr>
+<h3>The issue with issues.</h3>
+<p>Trying to optimize the algorithm and making small twerks to fix small bugs causes the program to limit its capabilities. Unfortunately too often in Computer Science programmers are faced with the limitations of how much their machines can do at a reasonable time.
+<br><br>
+That being said, with the fixes for the issues above, I have had to limit the program. One of the known limitations, for instance, is that now it can't find path to a page of disambiguation, since I have decided to ignore those in favor of runtime.
+</p>
+<br><br><hr>
+* I'm okay with this being posted on bangerz.co *
