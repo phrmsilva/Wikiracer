@@ -5,7 +5,9 @@ A bot for Wikipedia races.
 ## Abstract
 #### What did I do in a nutshell? 
 
+
 This project consists of a Wikipedia crawler. It attempts to find a path between two different articles in Wikipedia, in which the article pages are the nodes and the links on a article's page is a directed edge towards the article it links to. It can apply either Depth First Search or Breadth First Search algorithms to it. There are also a couple of implementation optimization tools for it.
+
 -----
 ## Introduction
 #### What is the problem? 
